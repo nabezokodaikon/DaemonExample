@@ -24,6 +24,10 @@ import akka.actor.{ Actor, ActorSystem, Props }
 
 class AppDaemon(appName: String) extends Daemon with LazyLogging {
 
+  def this() = {
+    this("daemon-example")
+  }
+
   private val system = ActorSystem(appName)
 
   override def init(context: DaemonContext) = {
@@ -50,6 +54,8 @@ class AppDaemon(appName: String) extends Daemon with LazyLogging {
 
     system.terminate()
     Await.result(system.whenTerminated, Duration.Inf)
+
+    logger.info("stopped!!")
   }
 
   override def destroy() = {

@@ -9,7 +9,7 @@
 
     <!-- ファイル出力設定 -->
      <appender name="APP_FILE" class="ch.qos.logback.core.FileAppender">
-         <file>./logs/app.log</file>
+         <file>/home/nabezokodaikon/develop/daemonexample/logs/app.log</file>
          <append>true</append>
          <encoder>
              <pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n</pattern>
