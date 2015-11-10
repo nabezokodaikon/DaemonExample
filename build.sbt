@@ -24,7 +24,10 @@ lazy val root = (project.in(file(".")))
       "ch.qos.logback" % "logback-classic" % "1.1.3",
 
       // Daemon
-      "commons-daemon" % "commons-daemon" % "1.0.15"
+      "commons-daemon" % "commons-daemon" % "1.0.15",
+
+      // Akka
+      "com.typesafe.akka" % "akka-actor_2.11" % "2.4.0"
     )
   )
 
