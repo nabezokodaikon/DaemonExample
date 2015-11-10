@@ -21,7 +21,10 @@ lazy val root = (project.in(file(".")))
 
       // Logger
       "com.typesafe.scala-logging" % "scala-logging_2.11" % "3.1.0",
-      "ch.qos.logback" % "logback-classic" % "1.1.3"
+      "ch.qos.logback" % "logback-classic" % "1.1.3",
+
+      // Daemon
+      "commons-daemon" % "commons-daemon" % "1.0.15"
     )
   )
 
