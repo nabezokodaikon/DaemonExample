@@ -29,6 +29,7 @@ class AppDaemon(appName: String) extends Daemon with LazyLogging {
   }
 
   private val system = ActorSystem(appName)
+  private val actor = system.actorOf(Props[ProcessActor])
 
   override def init(context: DaemonContext) = {
     logger.info("init!!")
@@ -37,10 +38,9 @@ class AppDaemon(appName: String) extends Daemon with LazyLogging {
   override def start() = {
     logger.info("start!!")
 
-    val actor = system.actorOf(Props[ProcessActor])
     actor ! CountDown(1)
 
-    Signal.handle(new Signal("INT"), new SignalHandler {
+    Signal.handle(new Signal("TERM"), new SignalHandler {
       def handle(sig: Signal) = {
         logger.info(sig.toString)
         stop()
@@ -67,10 +67,12 @@ case class CountDown(value: Int)
 
 class ProcessActor extends Actor with LazyLogging {
 
+  import scala.concurrent.duration._
+  import scala.concurrent.ExecutionContext.Implicits.global
+
   def receive = {
     case CountDown(value) =>
-      Thread.sleep(1000)
       logger.info(s"${value}")
-      self ! CountDown(value + 1)
+      context.system.scheduler.scheduleOnce(1.seconds, self, CountDown(value + 1))
   }
 }
